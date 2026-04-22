@@ -3,5 +3,5 @@
 Nom : Thijssen  
 Prénom : Loic  
 
-Cours : SGDB  
+Cours : Projet_SGDB  
 Date : 2026
