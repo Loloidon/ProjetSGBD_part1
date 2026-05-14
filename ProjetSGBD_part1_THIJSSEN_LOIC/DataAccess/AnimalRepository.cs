@@ -50,6 +50,27 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
 
             connection.Close();
         }
+        public void AfficherTout()
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
 
+            string sql = "SELECT * FROM animal";
+
+            using var command = new NpgsqlCommand(sql, connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine(
+                    $"ID: {reader["id_animal"]} | " +
+                    $"Nom: {reader["nom"]} | " +
+                    $"Type: {reader["type_animal"]} | " +
+                    $"Sexe: {reader["sexe"]} | " +
+                    $"État: {reader["etat_courant"]}"
+                );
+            }
+        }
+        
     }
 }

@@ -45,7 +45,10 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
 
             Console.WriteLine("Animal ajouté !");
         }
-
+        public void AfficherTout()
+        {
+            _animalRepository.AfficherTout();
+        }
         private string LireTexteObligatoire(string message)
         {
             string valeur;
