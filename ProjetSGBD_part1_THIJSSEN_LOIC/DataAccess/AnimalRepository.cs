@@ -71,6 +71,35 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
                 );
             }
         }
-        
+        public void  AfficherUn(int id)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            string sql = @"
+                SELECT *
+                FROM animal
+                WHERE id_animal = @id;
+            ";
+            using var command = new NpgsqlCommand(sql , connection);
+            command.Parameters.AddWithValue("@id",id); 
+            connection.Open();
+
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                Console.WriteLine(
+                    $"ID: {reader["id_animal"]} | " +
+                    $"Nom: {reader["nom"]} | " +
+                    $"Type: {reader["type_animal"]} | " +
+                    $"Sexe: {reader["sexe"]} | " +
+                    $"État: {reader["etat_courant"]}");
+            }
+            else
+            {
+                Console.WriteLine("Animal introuvable");
+            }
+                connection.Close();
+        }
     }
 }

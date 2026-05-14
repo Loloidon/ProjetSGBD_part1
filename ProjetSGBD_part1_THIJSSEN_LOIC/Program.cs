@@ -15,6 +15,7 @@ while (continuer)
     Console.WriteLine("=== Refuge Animaux ===");
     Console.WriteLine("1. Ajouter un animal");
     Console.WriteLine("2. Afficher tout les animaux");
+    Console.WriteLine("3. Afficher un animal");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -28,6 +29,9 @@ while (continuer)
         
         case "2":
             menuAnimal.AfficherTout();
+            break;
+        case "3":
+            menuAnimal.AfficherUn();
             break;
         case "0":
             continuer = false;
