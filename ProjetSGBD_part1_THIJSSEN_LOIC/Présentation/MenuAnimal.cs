@@ -59,6 +59,16 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             }
             _animalRepository.AfficherUn(id);
         }
+        public void SupprimerUn()
+        {
+            int id = 0;
+            Console.WriteLine("Entrez l'ID de l'animal que vous souhaitez supprimer");
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Veuillez entrer un nombre valide");
+            }
+            _animalRepository.SupprimerUn(id);
+        }
         private string LireTexteObligatoire(string message)
         {
             string valeur;

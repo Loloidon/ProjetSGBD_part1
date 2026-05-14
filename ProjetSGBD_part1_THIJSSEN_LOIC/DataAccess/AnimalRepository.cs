@@ -101,5 +101,29 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
             }
                 connection.Close();
         }
+        public void SupprimerUn(int id)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+                        DELETE FROM animal
+                        WHERE id_animal = @id;
+                    ";
+
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@id", id);
+
+            int nbLignes = command.ExecuteNonQuery();
+
+            if (nbLignes > 0)
+            {
+                Console.WriteLine("Animal supprimé.");
+            }
+            else
+            {
+                Console.WriteLine("Animal introuvable.");
+            }
+        }
     }
 }

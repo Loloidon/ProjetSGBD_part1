@@ -16,6 +16,7 @@ while (continuer)
     Console.WriteLine("1. Ajouter un animal");
     Console.WriteLine("2. Afficher tout les animaux");
     Console.WriteLine("3. Afficher un animal");
+    Console.WriteLine("4. Supprimer un animal");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -32,6 +33,9 @@ while (continuer)
             break;
         case "3":
             menuAnimal.AfficherUn();
+            break;
+        case "4":
+            menuAnimal.SupprimerUn();
             break;
         case "0":
             continuer = false;
