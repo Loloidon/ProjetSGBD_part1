@@ -22,9 +22,9 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
 
             string sql = @"
                 Insert INTO animal
-                (nom,type_animal, sexe, date_naissance, sterilise)
+                (nom,type_animal, sexe, date_naissance, sterilise,date_sterilisation, couleurs, description, particularites, etat_courant, date_deces )
                 VALUES
-                (nom,@type_animal,@sexe,#date_naissance,@sterilise);
+                (@nom,@type_animal,@sexe,@date_naissance,@sterilise, @date_sterilisation,@couleurs, @description, @particularites, @etat_courant, @date_deces);
             ";
 
             using var command = new NpgsqlCommand(sql, connection);
@@ -33,6 +33,18 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
             command.Parameters.AddWithValue("@sexe", animal.Sexe);
             command.Parameters.AddWithValue("@date_naissance", animal.DateNaissance);
             command.Parameters.AddWithValue("@sterilise", animal.Sterilise);
+
+
+            command.Parameters.AddWithValue("@date_sterilisation", animal.DateSterilisation ?? (object)DBNull.Value);
+            
+            command.Parameters.AddWithValue("@couleurs", animal.Couleurs);
+            command.Parameters.AddWithValue("@description", animal.Description);
+            command.Parameters.AddWithValue("@particularites", animal.Particularites);
+            command.Parameters.AddWithValue("@etat_courant", animal.EtatCourant);
+            
+            command.Parameters.AddWithValue("@date_deces", animal.DateDeces ?? (object)DBNull.Value);
+            
+            
 
             command.ExecuteNonQuery();
 

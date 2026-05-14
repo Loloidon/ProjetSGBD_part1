@@ -36,6 +36,29 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             Console.Write("Stérilisé ? true/false : ");
             animal.Sterilise = bool.Parse(Console.ReadLine() ?? "false");
 
+            if(animal.Sterilise==true)
+            {
+                Console.Write("Date sterilisation (yyyy-mm-dd) ?");
+                animal.DateSterilisation = DateTime.Parse(Console.ReadLine());
+            }
+            Console.Write("Couleurs ?");
+            animal.Couleurs = Console.ReadLine();
+
+            Console.Write("Description ?");
+            animal.Description = Console.ReadLine();
+
+            Console.Write("Particularités ?");
+            animal.Particularites = Console.ReadLine();
+
+            Console.Write("Etat courant ? (au refuge - chez son propriétaire - accueilli - adopté - décédé)");
+            animal.EtatCourant = Console.ReadLine();
+
+            if(animal.EtatCourant=="décédé")
+            {
+                Console.Write("Date décès ? (yyyy-mm-dd");
+                animal.DateDeces = DateTime.Parse(Console.ReadLine());
+            }
+
             _animalRepository.Ajouter(animal);
 
             Console.WriteLine("Animal ajouté !");
