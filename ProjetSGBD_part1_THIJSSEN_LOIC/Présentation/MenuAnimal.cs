@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess;
+﻿using ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess;
 using ProjetSGBD_part1_THIJSSEN_LOIC.Metier;
-using ProjetSGBD_part1_THIJSSEN_LOIC.Présentation;
+
 namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
 {
     public class MenuAnimal
@@ -14,54 +9,106 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
 
         public MenuAnimal(AnimalRepository animalRepository)
         {
-            _animalRepository=animalRepository;
+            _animalRepository = animalRepository;
         }
 
         public void AjouterAnimal()
         {
             Animal animal = new Animal();
 
-            Console.Write("Nom :");
-            animal.Nom = Console.ReadLine() ?? "";
+            animal.Nom = LireTexteObligatoire("Nom : ");
+            animal.TypeAnimal = LireChoix("Type animal (chat/chien) : ", new[] { "chat", "chien" });
+            animal.Sexe = LireChoix("Sexe (M/F) : ", new[] { "M", "F" });
+            animal.DateNaissance = LireDate("Date naissance (yyyy-mm-dd) : ");
+            animal.Sterilise = LireOuiNon("Stérilisé ? oui/non : ");
 
-            Console.Write("Type animal (chat/chien :");
-            animal.TypeAnimal = Console.ReadLine() ?? "";
-
-            Console.Write("Sexe (M/F) :");
-            animal.Sexe = Console.ReadLine() ?? "";
-
-            Console.Write("Date naissance (yyyy-mm-dd) :");
-            animal.DateNaissance=DateTime.Parse(Console.ReadLine()?? "");
-
-            Console.Write("Stérilisé ? true/false : ");
-            animal.Sterilise = bool.Parse(Console.ReadLine() ?? "false");
-
-            if(animal.Sterilise==true)
+            if (animal.Sterilise)
             {
-                Console.Write("Date sterilisation (yyyy-mm-dd) ?");
-                animal.DateSterilisation = DateTime.Parse(Console.ReadLine());
+                animal.DateSterilisation = LireDate("Date stérilisation (yyyy-mm-dd) : ");
             }
-            Console.Write("Couleurs ?");
-            animal.Couleurs = Console.ReadLine();
 
-            Console.Write("Description ?");
-            animal.Description = Console.ReadLine();
+            animal.Couleurs = LireTexteOptionnel("Couleurs : ");
+            animal.Description = LireTexteOptionnel("Description : ");
+            animal.Particularites = LireTexteOptionnel("Particularités : ");
 
-            Console.Write("Particularités ?");
-            animal.Particularites = Console.ReadLine();
+            animal.EtatCourant = LireChoix(
+                "État courant (refuge/proprietaire/accueilli/adopte/decede) : ",
+                new[] { "refuge", "proprietaire", "accueilli", "adopte", "decede" }
+            );
 
-            Console.Write("Etat courant ? (au refuge - chez son propriétaire - accueilli - adopté - décédé)");
-            animal.EtatCourant = Console.ReadLine();
-
-            if(animal.EtatCourant=="décédé")
+            if (animal.EtatCourant == "decede")
             {
-                Console.Write("Date décès ? (yyyy-mm-dd");
-                animal.DateDeces = DateTime.Parse(Console.ReadLine());
+                animal.DateDeces = LireDate("Date décès (yyyy-mm-dd) : ");
             }
 
             _animalRepository.Ajouter(animal);
 
             Console.WriteLine("Animal ajouté !");
+        }
+
+        private string LireTexteObligatoire(string message)
+        {
+            string valeur;
+
+            do
+            {
+                Console.Write(message);
+                valeur = Console.ReadLine()?.Trim() ?? "";
+
+                if (string.IsNullOrWhiteSpace(valeur))
+                    Console.WriteLine("Ce champ est obligatoire.");
+            }
+            while (string.IsNullOrWhiteSpace(valeur));
+
+            return valeur;
+        }
+
+        private string LireTexteOptionnel(string message)
+        {
+            Console.Write(message);
+            return Console.ReadLine()?.Trim() ?? "";
+        }
+
+        private string LireChoix(string message, string[] choixValides)
+        {
+            string valeur;
+
+            do
+            {
+                Console.Write(message);
+                valeur = Console.ReadLine()?.Trim() ?? "";
+
+                string? choixTrouve = choixValides
+                    .FirstOrDefault(c => c.Equals(valeur, StringComparison.OrdinalIgnoreCase));
+
+                if (choixTrouve != null)
+                    return choixTrouve;
+
+                Console.WriteLine("Choix invalide.");
+            }
+            while (true);
+        }
+
+        private DateTime LireDate(string message)
+        {
+            DateTime date;
+
+            while (true)
+            {
+                Console.Write(message);
+                string saisie = Console.ReadLine()?.Trim() ?? "";
+
+                if (DateTime.TryParse(saisie, out date))
+                    return date;
+
+                Console.WriteLine("Date invalide. Exemple attendu : 2024-05-14");
+            }
+        }
+
+        private bool LireOuiNon(string message)
+        {
+            string reponse = LireChoix(message, new[] { "oui", "non" });
+            return reponse == "oui";
         }
     }
 }
