@@ -48,9 +48,9 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
             connection.Open();
 
             string sql = @"
-        DELETE FROM compatibilite
-        WHERE id_animal = @id_animal
-        AND type_compatibilite = @type_compatibilite;
+            DELETE FROM compatibilite
+            WHERE id_animal = @id_animal
+            AND type_compatibilite = @type_compatibilite;
     ";
 
             using var command = new NpgsqlCommand(sql, connection);
