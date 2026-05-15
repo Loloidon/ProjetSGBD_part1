@@ -6,11 +6,12 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
     public class MenuAnimal
     {
         private readonly AnimalRepository _animalRepository;
-
+        private readonly CompatibiliteRepository _compatibiliteRepository;
         public MenuAnimal(AnimalRepository animalRepository)
         {
             _animalRepository = animalRepository;
         }
+        
 
         public void AjouterAnimal()
         {
@@ -45,6 +46,7 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
 
             Console.WriteLine("Animal ajouté !");
         }
+
         public void AfficherTout()
         {
             _animalRepository.AfficherTout();
