@@ -20,6 +20,7 @@ while (continuer)
     Console.WriteLine("3. Afficher un animal");
     Console.WriteLine("4. Supprimer un animal");
     Console.WriteLine("5. Ajouter une compatibilité à un animal");
+    Console.WriteLine("6. Supprimer une compatibilité à un animal");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -45,6 +46,9 @@ while (continuer)
 
         case "5":
             menuCompatibilite.AjouterCompatibilite();
+            break;
+        case "6":
+            menuCompatibilite.SupprimerCompatibilite();
             break;
 
         case "0":

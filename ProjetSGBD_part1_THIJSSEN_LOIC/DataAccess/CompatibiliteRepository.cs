@@ -42,5 +42,28 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
 
             command.ExecuteNonQuery();
         }
+        public void Supprimer(int idAnimal, string typeCompatibilite)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+        DELETE FROM compatibilite
+        WHERE id_animal = @id_animal
+        AND type_compatibilite = @type_compatibilite;
+    ";
+
+            using var command = new NpgsqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@id_animal", idAnimal);
+            command.Parameters.AddWithValue("@type_compatibilite", typeCompatibilite);
+
+            int nbLignes = command.ExecuteNonQuery();
+
+            if (nbLignes > 0)
+                Console.WriteLine("Compatibilité supprimée.");
+            else
+                Console.WriteLine("Compatibilité introuvable.");
+        }
     }
 }

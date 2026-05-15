@@ -41,8 +41,22 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
 
             Console.WriteLine("Compatibilité ajoutée !");
         }
+        public void SupprimerCompatibilite()
+        {
+            _animalRepository.AfficherTout();
 
-        
+            int idAnimal = LireEntier("Entrez l'ID de l'animal : ");
+
+            string typeCompatibilite = LireChoix(
+                "Type de compatibilité à supprimer (chat/chien/jeune_enfant/enfant/jardin/poney) : ",
+                new[] { "chat", "chien", "jeune_enfant", "enfant", "jardin", "poney" }
+            );
+
+            _compatibiliteRepository.Supprimer(idAnimal, typeCompatibilite);
+
+            Console.WriteLine("Compatibilité supprimée !");
+        }
+
 
         private int LireEntier(string message)
         {
