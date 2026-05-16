@@ -37,8 +37,33 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             Console.WriteLine("Entrez le mail de la personne de contact");
             contact.Mail = Console.ReadLine();
 
+            _contactRepository.Ajouter(contact);
             Console.WriteLine("Contact ajouté !");
 
+        }
+        public void AfficherTout()
+        {
+            _contactRepository.AfficherTout();
+        }
+        public void AfficherUn()
+        {
+            int id = 0;
+            Console.WriteLine("Entrez l'ID du contact que vous souhaitez afficher");
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Veuillez entrer un nombre valide");
+            }
+            _contactRepository.AfficherUn(id);
+        }
+        public void SupprimerUn()
+        {
+            int id = 0;
+            Console.WriteLine("Entrez l'ID du contact que vous souhaitez supprimer");
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Veuillez entrer un nombre valide");
+            }
+            _contactRepository.Supprimer(id);
         }
         private int LireEntier(string message)
         {

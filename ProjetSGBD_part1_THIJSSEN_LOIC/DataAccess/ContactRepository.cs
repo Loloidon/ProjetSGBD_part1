@@ -66,5 +66,62 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
                 Console.WriteLine("Contact introuvable.");
             }
         }
+        public void AfficherUn(int id)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            string sql = @"
+                SELECT *
+                FROM contact
+                WHERE id_contact = @id;
+            ";
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@id", id);
+            connection.Open();
+
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                Console.WriteLine(
+                    $"ID: {reader["id_contact"]} | " +
+                    $"Nom: {reader["nom"]} | " +
+                    $"Prénom: {reader["prenom"]} | " +
+                    $"Registre: {reader["registre"]} | " +
+                    $"Adresse: {reader["adresse"]} | " +
+                    $"Gsm: {reader["gsm"]} | " +
+                    $"Mail: {reader["mail"]}");
+
+
+            }
+            else
+            {
+                Console.WriteLine("Contact introuvable");
+            }
+            connection.Close();
+        }
+        public void AfficherTout()
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = "SELECT * FROM contact";
+
+            using var command = new NpgsqlCommand(sql, connection);
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine(
+                    $"ID: {reader["id_contact"]} | " +
+                    $"Nom: {reader["nom"]} | " +
+                    $"Prénom: {reader["prenom"]} | " +
+                    $"Registre: {reader["registre"]} | " +
+                    $"Adresse: {reader["adresse"]} | " +
+                    $"Gsm: {reader["gsm"]} | " +
+                    $"Mail: {reader["mail"]}"
+                );
+            }
+        }
     }
 }

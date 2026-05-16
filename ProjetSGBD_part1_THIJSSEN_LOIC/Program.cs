@@ -10,6 +10,8 @@ MenuAnimal menuAnimal = new MenuAnimal(animalRepository);
 CompatibiliteRepository compatibiliteRepository = new CompatibiliteRepository(connectionString);
 MenuCompatibilite menuCompatibilite = new MenuCompatibilite(compatibiliteRepository, animalRepository);
 
+ContactRepository contactRepository = new ContactRepository(connectionString);
+MenuContact menuContact = new MenuContact(contactRepository);
 bool continuer = true;
 
 while (continuer)
@@ -21,6 +23,9 @@ while (continuer)
     Console.WriteLine("4. Supprimer un animal");
     Console.WriteLine("5. Ajouter une compatibilité à un animal");
     Console.WriteLine("6. Supprimer une compatibilité à un animal");
+    Console.WriteLine("7. Ajouter un contact");
+    Console.WriteLine("8. Afficher un contact");
+    Console.WriteLine("9. Supprimer un contact");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -49,6 +54,17 @@ while (continuer)
             break;
         case "6":
             menuCompatibilite.SupprimerCompatibilite();
+            break;
+        case "7":
+            menuContact.Ajout();
+            break;
+
+        case "8":
+            menuContact.AfficherTout();
+            menuContact.AfficherUn();
+            break;
+        case "9":
+            menuContact.SupprimerUn();
             break;
 
         case "0":
