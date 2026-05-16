@@ -66,6 +66,34 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
                 Console.WriteLine("Contact introuvable.");
             }
         }
+        public void Modifier(int id, Contact contact)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = @"
+                        UPDATE contact
+                        SET nom = @nom,
+                            prenom = @prenom,
+                            registre = @registre,
+                            adresse = @adresse,
+                            gsm = @gsm,
+                            mail = @mail
+                        WHERE id_contact = @id;
+                    ";
+
+            using var command = new NpgsqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@nom", contact.Nom);
+            command.Parameters.AddWithValue("@prenom", contact.Prenom);
+            command.Parameters.AddWithValue("@registre", contact.Registre);
+            command.Parameters.AddWithValue("@adresse", contact.Adresse);
+            command.Parameters.AddWithValue("@gsm", contact.Gsm);
+            command.Parameters.AddWithValue("@mail", contact.Mail);
+
+            command.ExecuteNonQuery();
+        }
         public void AfficherUn(int id)
         {
             using var connection = new NpgsqlConnection(_connectionString);

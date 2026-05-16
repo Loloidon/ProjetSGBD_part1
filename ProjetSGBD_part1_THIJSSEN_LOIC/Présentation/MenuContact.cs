@@ -65,6 +65,40 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             }
             _contactRepository.Supprimer(id);
         }
+        public void Modifier()
+        {
+            int id = 0;
+            Console.WriteLine("Entrez l'ID du contact à modifier :");
+
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Veuillez entrer un nombre valide.");
+            }
+
+            Contact contact = new Contact();
+
+            Console.WriteLine("Nom :");
+            contact.Nom = Console.ReadLine();
+
+            Console.WriteLine("Prénom :");
+            contact.Prenom = Console.ReadLine();
+
+            Console.WriteLine("Registre national :");
+            contact.Registre = Console.ReadLine();
+
+            Console.WriteLine("Adresse :");
+            contact.Adresse = Console.ReadLine();
+
+            Console.WriteLine("GSM :");
+            contact.Gsm = Console.ReadLine();
+
+            Console.WriteLine("Mail :");
+            contact.Mail = Console.ReadLine();
+
+            _contactRepository.Modifier(id, contact);
+
+            Console.WriteLine("Contact modifié !");
+        }
         private int LireEntier(string message)
         {
             int valeur;

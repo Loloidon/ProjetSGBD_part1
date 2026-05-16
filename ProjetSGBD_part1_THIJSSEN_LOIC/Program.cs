@@ -26,6 +26,7 @@ while (continuer)
     Console.WriteLine("7. Ajouter un contact");
     Console.WriteLine("8. Afficher un contact");
     Console.WriteLine("9. Supprimer un contact");
+    Console.WriteLine("10. Modifier un contact");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -65,6 +66,9 @@ while (continuer)
             break;
         case "9":
             menuContact.SupprimerUn();
+            break;
+        case "10":
+            menuContact.Modifier();
             break;
 
         case "0":
