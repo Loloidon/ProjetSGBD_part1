@@ -16,6 +16,13 @@ MenuContact menuContact = new MenuContact(contactRepository);
 VaccinRepository vaccinRepository = new VaccinRepository(connectionString);
 MenuVaccin menuVaccin = new MenuVaccin(vaccinRepository, animalRepository);
 
+AccueilFamilleRepository accueilFamilleRepository = new AccueilFamilleRepository(connectionString);
+MenuAccueilFamille menuAccueilFamille = new MenuAccueilFamille(
+    accueilFamilleRepository,
+    animalRepository,
+    contactRepository
+);
+
 bool continuer = true;
 
 while (continuer)
@@ -34,6 +41,9 @@ while (continuer)
     Console.WriteLine("11. Ajouter un vaccin à un animal");
     Console.WriteLine("12. Afficher les vaccins d'un animal");
     Console.WriteLine("13. Afficher tout les animaux présent dans le refuge");
+    Console.WriteLine("14. Ajouter une famille d'accueil");
+    Console.WriteLine("15. Lister familles d'accueil par animal");
+    Console.WriteLine("16. Lister animaux accueillis par une famille");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -86,6 +96,17 @@ while (continuer)
             break;
         case "13":
             menuAnimal.ListerAnimauxRefuge();
+            break;
+        case "14":
+            menuAccueilFamille.AjouterAccueil();
+            break;
+
+        case "15":
+            menuAccueilFamille.ListerFamillesParAnimal();
+            break;
+
+        case "16":
+            menuAccueilFamille.ListerAnimauxParFamille();
             break;
         case "0":
             continuer = false;
