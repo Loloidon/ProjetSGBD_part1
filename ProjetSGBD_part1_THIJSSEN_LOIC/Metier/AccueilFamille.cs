@@ -10,7 +10,7 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Metier
     {
         public int IdAccueil {  get; set; }
         public DateTime DateDebut { get; set; }
-        public DateTime DateFin {  get; set; }
+        public DateTime? DateFin {  get; set; }
         public int IdAnimal { get; set; }
         public int IdContact { get; set; }
     }
