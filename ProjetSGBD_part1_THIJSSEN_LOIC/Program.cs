@@ -12,6 +12,10 @@ MenuCompatibilite menuCompatibilite = new MenuCompatibilite(compatibiliteReposit
 
 ContactRepository contactRepository = new ContactRepository(connectionString);
 MenuContact menuContact = new MenuContact(contactRepository);
+
+VaccinRepository vaccinRepository = new VaccinRepository(connectionString);
+MenuVaccin menuVaccin = new MenuVaccin(vaccinRepository, animalRepository);
+
 bool continuer = true;
 
 while (continuer)
@@ -27,6 +31,8 @@ while (continuer)
     Console.WriteLine("8. Afficher un contact");
     Console.WriteLine("9. Supprimer un contact");
     Console.WriteLine("10. Modifier un contact");
+    Console.WriteLine("11. Ajouter un vaccin à un animal");
+    Console.WriteLine("12. Afficher les vaccins d'un animal");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -70,7 +76,13 @@ while (continuer)
         case "10":
             menuContact.Modifier();
             break;
+        case "11":
+            menuVaccin.AjouterVaccinAnimal();
+            break;
 
+        case "12":
+            menuVaccin.AfficherVaccinsAnimal();
+            break;
         case "0":
             continuer = false;
             break;
