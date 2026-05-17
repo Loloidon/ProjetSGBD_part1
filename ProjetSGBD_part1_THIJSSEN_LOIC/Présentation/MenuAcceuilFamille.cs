@@ -37,7 +37,7 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             _contactRepository.AfficherTout();
             accueil.IdContact = LireEntier("ID du contact / famille d'accueil : ");
 
-            accueil.DateDebut = LireDate("Date début (yyyy-mm-dd) : ");
+            accueil.DateDebut = LireDate("Date d'arrivée dans la famille (yyyy-mm-dd) : ");
 
             if (LireOuiNon("Y a-t-il une date de fin ? oui/non : "))
             {

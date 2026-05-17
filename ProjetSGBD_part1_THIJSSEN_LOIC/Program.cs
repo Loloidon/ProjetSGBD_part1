@@ -23,6 +23,11 @@ MenuAccueilFamille menuAccueilFamille = new MenuAccueilFamille(
     contactRepository
 );
 
+ProcessusAdoptionRepository adoptionRepository =
+    new ProcessusAdoptionRepository(connectionString);
+
+MenuProcessusAdoption menuAdoption =
+    new MenuProcessusAdoption(adoptionRepository, animalRepository, contactRepository);
 bool continuer = true;
 
 while (continuer)
@@ -44,6 +49,9 @@ while (continuer)
     Console.WriteLine("14. Ajouter une famille d'accueil");
     Console.WriteLine("15. Lister familles d'accueil par animal");
     Console.WriteLine("16. Lister animaux accueillis par une famille");
+    Console.WriteLine("17. Ajouter une adoption");
+    Console.WriteLine("18. Lister les adoptions");
+    Console.WriteLine("19. Modifier le statut d'une adoption");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -107,6 +115,17 @@ while (continuer)
 
         case "16":
             menuAccueilFamille.ListerAnimauxParFamille();
+            break;
+        case "17":
+            menuAdoption.AjouterAdoption();
+            break;
+
+        case "18":
+            menuAdoption.ListerAdoptions();
+            break;
+
+        case "19":
+            menuAdoption.ModifierStatut();
             break;
         case "0":
             continuer = false;
