@@ -125,5 +125,28 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
                 Console.WriteLine("Animal introuvable.");
             }
         }
+        public void ListerAnimauxRefuge()
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+
+            string sql = "SELECT * FROM animal" +
+                " WHERE etat_courant = @etat";
+
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@etat", "refuge");
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine(
+                    $"ID: {reader["id_animal"]} | " +
+                    $"Nom: {reader["nom"]} | " +
+                    $"Type: {reader["type_animal"]} | " +
+                    $"Sexe: {reader["sexe"]} | " +
+                    $"État: {reader["etat_courant"]}"
+                );
+            }
+        }
     }
 }

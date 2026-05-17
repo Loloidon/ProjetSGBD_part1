@@ -71,6 +71,10 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             }
             _animalRepository.SupprimerUn(id);
         }
+        public void ListerAnimauxRefuge()
+        {
+            _animalRepository.ListerAnimauxRefuge();
+        }
         private string LireTexteObligatoire(string message)
         {
             string valeur;

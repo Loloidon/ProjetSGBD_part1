@@ -33,6 +33,7 @@ while (continuer)
     Console.WriteLine("10. Modifier un contact");
     Console.WriteLine("11. Ajouter un vaccin à un animal");
     Console.WriteLine("12. Afficher les vaccins d'un animal");
+    Console.WriteLine("13. Afficher tout les animaux présent dans le refuge");
     Console.WriteLine("0. Quitter");
     Console.Write("Choix : ");
 
@@ -82,6 +83,9 @@ while (continuer)
 
         case "12":
             menuVaccin.AfficherVaccinsAnimal();
+            break;
+        case "13":
+            menuAnimal.ListerAnimauxRefuge();
             break;
         case "0":
             continuer = false;
