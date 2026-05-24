@@ -1,104 +1,102 @@
 ﻿using ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess;
 using ProjetSGBD_part1_THIJSSEN_LOIC.Metier;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
 {
     public class MenuContact
     {
         private readonly ContactRepository _contactRepository;
-        
+
         public MenuContact(ContactRepository contactRepository)
         {
             _contactRepository = contactRepository;
         }
+
         public void Ajout()
         {
-            Contact contact= new Contact();
-            Console.WriteLine("Entrez le nom de la personne de contact");
-            contact.Nom = Console.ReadLine();
+            Contact contact = new Contact();
 
-            Console.WriteLine("Entrez le prénom de la personne de contact");
-            contact.Prenom = Console.ReadLine();
+            contact.Nom = LireTexteObligatoire("Entrez le nom de la personne de contact : ");
 
-            Console.WriteLine("Entrez le n* de registre national de la personne de contact");
-            contact.Registre=(Console.ReadLine());
+            contact.Prenom = LireTexteObligatoire("Entrez le prénom de la personne de contact : ");
 
-            Console.WriteLine("Entrez l'adresse de la personne de contact");
-            contact.Adresse = Console.ReadLine();
+            contact.Registre = LireNombreLongueur(
+                "Entrez le numéro de registre national (11 chiffres) : ",
+                11
+            );
 
-            Console.WriteLine("Entrez le gsm de la personne de contact");
-            contact.Gsm = (Console.ReadLine());
+            Console.Write("Entrez l'adresse de la personne de contact : ");
+            contact.Adresse = Console.ReadLine() ?? "";
 
-            Console.WriteLine("Entrez le mail de la personne de contact");
-            contact.Mail = Console.ReadLine();
+            contact.Gsm = LireNombreLongueur(
+                "Entrez le GSM (10 chiffres) : ",
+                10
+            );
+
+            Console.Write("Entrez le mail de la personne de contact : ");
+            contact.Mail = Console.ReadLine() ?? "";
 
             _contactRepository.Ajouter(contact);
-            Console.WriteLine("Contact ajouté !");
 
+            Console.WriteLine("Contact ajouté !");
         }
+
         public void AfficherTout()
         {
             _contactRepository.AfficherTout();
         }
+
         public void AfficherUn()
         {
-            int id = 0;
-            Console.WriteLine("Entrez l'ID du contact que vous souhaitez afficher");
-            while (!int.TryParse(Console.ReadLine(), out id))
-            {
-                Console.WriteLine("Veuillez entrer un nombre valide");
-            }
+            int id = LireEntier(
+                "Entrez l'ID du contact que vous souhaitez afficher : "
+            );
+
             _contactRepository.AfficherUn(id);
         }
+
         public void SupprimerUn()
         {
-            int id = 0;
-            Console.WriteLine("Entrez l'ID du contact que vous souhaitez supprimer");
-            while (!int.TryParse(Console.ReadLine(), out id))
-            {
-                Console.WriteLine("Veuillez entrer un nombre valide");
-            }
+            int id = LireEntier(
+                "Entrez l'ID du contact que vous souhaitez supprimer : "
+            );
+
             _contactRepository.Supprimer(id);
         }
+
         public void Modifier()
         {
-            int id = 0;
-            Console.WriteLine("Entrez l'ID du contact à modifier :");
-
-            while (!int.TryParse(Console.ReadLine(), out id))
-            {
-                Console.WriteLine("Veuillez entrer un nombre valide.");
-            }
+            int id = LireEntier(
+                "Entrez l'ID du contact à modifier : "
+            );
 
             Contact contact = new Contact();
 
-            Console.WriteLine("Nom :");
-            contact.Nom = Console.ReadLine();
+            contact.Nom = LireTexteObligatoire("Nom : ");
 
-            Console.WriteLine("Prénom :");
-            contact.Prenom = Console.ReadLine();
+            contact.Prenom = LireTexteObligatoire("Prénom : ");
 
-            Console.WriteLine("Registre national :");
-            contact.Registre = Console.ReadLine();
+            contact.Registre = LireNombreLongueur(
+                "Registre national (11 chiffres) : ",
+                11
+            );
 
-            Console.WriteLine("Adresse :");
-            contact.Adresse = Console.ReadLine();
+            Console.Write("Adresse : ");
+            contact.Adresse = Console.ReadLine() ?? "";
 
-            Console.WriteLine("GSM :");
-            contact.Gsm = Console.ReadLine();
+            contact.Gsm = LireNombreLongueur(
+                "GSM (10 chiffres) : ",
+                10
+            );
 
-            Console.WriteLine("Mail :");
-            contact.Mail = Console.ReadLine();
+            Console.Write("Mail : ");
+            contact.Mail = Console.ReadLine() ?? "";
 
             _contactRepository.Modifier(id, contact);
 
             Console.WriteLine("Contact modifié !");
         }
+
         private int LireEntier(string message)
         {
             int valeur;
@@ -114,20 +112,35 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.Présentation
             }
         }
 
-        private string LireChoix(string message, string[] choixValides)
+        private string LireTexteObligatoire(string message)
         {
             while (true)
             {
                 Console.Write(message);
+
                 string valeur = Console.ReadLine()?.Trim() ?? "";
 
-                string? choixTrouve = choixValides
-                    .FirstOrDefault(c => c.Equals(valeur, StringComparison.OrdinalIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(valeur))
+                    return valeur;
 
-                if (choixTrouve != null)
-                    return choixTrouve;
+                Console.WriteLine("Ce champ est obligatoire.");
+            }
+        }
 
-                Console.WriteLine("Choix invalide.");
+        private string LireNombreLongueur(string message, int longueur)
+        {
+            while (true)
+            {
+                Console.Write(message);
+
+                string valeur = Console.ReadLine()?.Trim() ?? "";
+
+                if (valeur.Length == longueur && valeur.All(char.IsDigit))
+                    return valeur;
+
+                Console.WriteLine(
+                    $"Veuillez entrer exactement {longueur} chiffres."
+                );
             }
         }
     }
