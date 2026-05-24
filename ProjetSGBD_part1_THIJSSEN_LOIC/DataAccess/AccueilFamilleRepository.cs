@@ -23,7 +23,7 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
             connection.Open();
 
             string sql = @"
-                Insert INTO acceuil_famille
+                Insert INTO accueil_famille
                 (date_debut, date_fin, id_animal, id_contact )
                 VALUES
                 (@date_debut, @date_fin, @id_animal, @id_contact);
@@ -73,7 +73,7 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
                 );
             }
         }
-        public void ListerAnimauxAcceuillisFamille(int idAnimal)
+        public void ListerAnimauxAcceuillisFamille(int idContact)
         {
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
@@ -87,7 +87,7 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
     ";
 
             using var command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@id_animal", idAnimal);
+            command.Parameters.AddWithValue("@id_contact", idContact);
 
             using var reader = command.ExecuteReader();
 

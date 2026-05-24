@@ -55,15 +55,26 @@ namespace ProjetSGBD_part1_THIJSSEN_LOIC.DataAccess
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@id", id);
 
-            int nbLignes = command.ExecuteNonQuery();
+            try
+            {
+                int nbLignes = command.ExecuteNonQuery();
 
-            if (nbLignes > 0)
-            {
-                Console.WriteLine("Contact supprimé.");
+                if (nbLignes > 0)
+                {
+                    Console.WriteLine("Contact supprimé.");
+                }
+                else
+                {
+                    Console.WriteLine("Contact introuvable.");
+                }
             }
-            else
+            catch (PostgresException)
             {
-                Console.WriteLine("Contact introuvable.");
+                Console.WriteLine(
+                    "Impossible de supprimer ce contact : " +
+                    "il est lié à une adoption, un accueil famille " +
+                    "ou une entrée/sortie du refuge."
+                );
             }
         }
         public void Modifier(int id, Contact contact)
